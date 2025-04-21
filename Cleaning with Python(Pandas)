@@ -1,0 +1,33 @@
+1. Load the Dataset
+   import pandas as pd
+   df = pd.read_csv('netflix_titles.csv')  # Replace with your path
+
+2. Handle Missing Values
+   # Check missing values
+   print(df.isnull().sum())
+   # Drop rows with too many missing values or fill them
+   df['director'].fillna('Unknown', inplace=True)
+   df['cast'].fillna('Unknown', inplace=True)
+   df.dropna(subset=['title', 'type'], inplace=True)  # drop rows missing essential info
+
+3. Remove Duplicate Rows
+   df.drop_duplicates(inplace=True)
+
+4. Standardize Text Values.
+   # Clean and standardize gender-like or categorical columns if present
+   df['country'] = df['country'].str.strip().str.title()
+   df['rating'] = df['rating'].str.upper().str.strip()
+
+5. Convert Date Formats6. 
+   df['date_added'] = pd.to_datetime(df['date_added'], errors='coerce')  # handle invalid dates
+
+6.Rename Columns for Consistency.
+  df.columns = df.columns.str.lower().str.replace(' ', '_')
+
+7. Fix Data Types
+   # Check datatypes
+   print(df.dtypes)
+
+   # Convert durations if needed
+   df['duration'] = df['duration'].astype(str)
+
